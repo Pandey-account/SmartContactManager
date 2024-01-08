@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+
+<body>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+
+					<div class="my-card mt-1">
+
+						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert"
+							role="alert">
+							<p class="text-center" th:text="${session.message.content}"></p>
+
+							<th:block th:text="${@sessionhelper.removeMessageFromSession()}"></th:block>
+						</div>
+
+						<div class="conatiner text-center">
+
+							<img style="width: 100px;" th:src="@{/Image/sign-form.png}" alt="" />
+
+						</div>
+
+						<h1 class="text-center">Register Here</h1>
+
+						<form novalidate="novalidate" th:action="@{/do_register}" method="post" th:object="${user}">
+
+							<!--name field-->
+
+							<div class="form-group">
+
+								<label for="exampleInputEmail1" class="form-label">Your Name</label>
+
+								<input type="text" name="name" 
+								    class="form-control"
+								    th:classappend="${#fields.hasErrors('Name') ? 'is-invalid': ''}" 
+								    id="exampleInputEmail1"
+									aria-describedby="emailHelp" 
+									placeholder="Enter here" required
+									th:value="${user.name}" />
+								<div class="invalid-feedback" th:each = "e: ${#fields.errors('Name')}" th:text="${e}">
+									
+								</div>
+
+							</div>
+
+							<!--Email field-->
+
+							<div class="form-group">
+
+								<label for="exampleInputEmail1" class="form-label">Your Email</label>
+
+								<input type="email" name="email" class="form-control" id="exampleInputEmail1"
+									aria-describedby="emailHelp" placeholder="Enter here" required
+									 th:classappend="${#fields.hasErrors('Email') ? 'is-invalid': ''}" 
+									th:value="${user.email}" />
+									<div class="invalid-feedback" th:each = "e: ${#fields.errors('Email')}" th:text="${e}">
+									
+								</div>
+
+							</div>
+
+							<!--password field-->
+
+							<div class="form-group">
+
+								<label for="exampleInputEmail1" class="form-label">Your Password</label>
+
+								<input type="password" name="password" class="form-control" id="exampleInputEmail1"
+									aria-describedby="emailHelp"  placeholder="Enter here" required 
+									th:classappend="${#fields.hasErrors('password') ? 'is-invalid': ''}" />
+									<div class="invalid-feedback" th:each = "e: ${#fields.errors('password')}" th:text="${e}">
+									
+								</div>
+
+							</div>
+
+							<!-- user about field-->
+
+								<div class="from-group mt-3">
+									
+									<textarea th:text="${user.about}" name="about" id="mytextarea" placeholder="Enter contact description" rows="10" class="form-control"></textarea>
+								
+							</div>
+
+							<!-- terms and condition agreement -->
+
+							<div class="form-group form-check mt-2">
+
+								<input type="checkbox" name="agreement" class="form-check-input" id="agreement" />
+
+								<label for="agreement">Accept terms and conditions</label>
+
+							</div>
+
+							<div class="container text-center mt-3">
+
+								<button type="submit" class="btn bg-primary btn-block text-white">
+									Submit
+								</button>
+								<button type="reset" class="btn btn-warning btn-block">
+									Reset
+								</button>
+
+							</div>
+
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+        tinymce.init({
+			
+        selector: '#mytextarea'
+      });
+      
+      </script>
+
+	</section>
+
+</body>
+
+</html>

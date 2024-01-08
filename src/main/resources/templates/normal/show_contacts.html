@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+
+<body>
+
+	<section>
+
+		<div class="card m-3">
+
+			<div class="card-body">
+
+				<h1 class="text-center">Your Contacts </h1>
+
+                <div class="table-responsive">
+					
+				<table class="table table-hover ">
+
+					<thead>
+
+						<tr>
+							<th scope="col">#Id</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Action</th>
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<tr th:each="c : ${contacts}">
+							
+							<th scope="row" th:text="${'SCM2024'+c.cId}"></th>
+							
+							<td> <img th:src="@{'/Image/'+${c.image}}" class="my_profile" alt="profile photo" /> <span th:text="${c.name}"></spanth:text="${c.name}"></td>
+							
+							<td><a th:href="@{'/user/contact/' + ${c.cId}}" <span th:text="${c.email}"></span></td>
+							
+							<td th:text="${c.phone}">@mdo</td>
+							
+							<td>
+								<a th:onclick="|deleteContact(${c.cId})|"  class="btn btn-danger btn-sm">Delete</a>
+								<form th:action="@{'/user/update-contact/'+${c.cId}}" method="post">
+								<button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
+								</form>
+							</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+                
+                <!-- Pagination part -->
+                
+				<nav aria-label="Page navigation example">
+					
+					<ul class="pagination">
+						
+						<li th:if="${CurrentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/'+${CurrentPage - 1}}">Previous</a></li>
+						
+						<li th:classappend="${CurrentPage==i-1 ? 'active' : ''}" 
+						th:each="i : ${#numbers.sequence(1,totalPage)}" class="page-item"><a th:href="@{'/user/show-contacts/'+${i-1}}" class="page-link" href="#">
+							<span th:text="${i}"></span></a></li>
+						
+						<li th:if="${CurrentPage + 1 != totalPage}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/'+${CurrentPage + 1}}">Next</a></li>
+						
+					</ul>
+					
+				</nav>
+
+			</div>
+
+		</div>
+		
+	</div>
+	
+	<script>
+			
+			$(document).ready(() => {
+				$('.item').removeClass('active');
+				$('#contacts-link').addClass('active');
+			});
+			
+		</script>
+
+	</section>
+
+</body>
+
+</html>

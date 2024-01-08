@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+
+<body>
+
+	<section>
+
+		<div class="card m-3">
+
+			<div class="card-body m-3">
+
+				<div class="container text-center">
+
+					<img style="height: 200px; width: 200px " class="my_profile" th:src="@{'/Image/'+${user.imageUrl}}"
+						alt="profile picture" />
+
+				</div>
+
+				<h1 class="text-center">Update User</h1>
+
+				<div class="container-fluid mt-1">
+
+					<div class="row">
+
+						<div class="col-md-10 offset-md-1">
+
+							<form th:action="@{/user/update-process}" th:object="${user}" class="mt-2"
+								enctype="multipart/form-data" method="post">
+
+								<!-- Contact Id Field -->
+
+								<input type="hidden" th:value="${user.id}" name="id">
+
+								<!-- name-->
+
+								<div class="form-group mt-3">
+
+									<input th:value="${user.name}" required type="text" id="firstName" name="name"
+										placeholder="Enter Name here" class="form-control" />
+
+								</div>
+
+								<!--Email Field-->
+
+								<div class="form-group mt-3">
+
+									<input th:value="${user.email}" type="email" id="email" name="email"
+										placeholder="Enter Email here" class="form-control" />
+
+								</div>
+
+								<!--Enabled Field-->
+
+								<div class="form-check-inline mt-3">
+									
+									<label class="form-check-label" for="inlineRadio1">Account Active</label>
+									
+								</div>
+
+								<div class="form-check-inline mt-3">
+									<input class="form-check-input" type="radio" name="enabled"
+										id="inlineRadio1" th:value="${user.enabled}">
+									<label class="form-check-label" for="inlineRadio1">True</label>
+								</div>
+
+								<div class="form-check-inline mt-3">
+									<input class="form-check-input" type="radio" name="enabled"
+										id="inlineRadio2" th:value="${user.enabled}">
+									<label class="form-check-label" for="inlineRadio2">False</label>
+								</div>
+
+								<!--About Field-->
+
+								<div class="from-group mt-3">
+									
+									<textarea th:text="${user.about}" name="about" id="mytextarea" placeholder="Enter User description" rows="10" class="form-control"></textarea>
+									
+								</div>
+
+								<!--Contact Image -->
+
+								<p class="text-secondary mt-3">Choose new Profile pic</p>
+
+								<div class="custom-file mt-1">
+
+									<input type="file" name="imageFile" />
+
+								</div>
+
+								<div class="container text-center mt-3">
+
+									<button class="btn btn-primary">Save Contact</button>
+
+								</div>
+
+							</form>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+			tinymce.init({
+
+				selector: '#mytextarea'
+			});
+
+		</script>
+
+	</section>
+
+</body>
+
+</html>
